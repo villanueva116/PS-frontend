@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta institucional UADY, refinada */
+  --color-navy-900: #0B2545;
+  --color-navy-800: #12305A;
+  --color-cyan-600: #3CA0C4;
+  --color-cyan-500: #4FB6D6;
+  --color-cyan-400: #6FC5E0;
+  --color-sky-100: #EAF4FA;
+  --color-sky-50: #F5FAFD;
+  --color-slate-700: #334155;
+  --color-slate-500: #64748B;
+  --color-slate-400: #94A3B8;
+  --color-line: #E4E7EB;
+  --color-success-600: #2F8F5B;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-slate-700);
+  background-color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

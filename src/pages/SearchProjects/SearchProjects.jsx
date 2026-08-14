@@ -6,6 +6,7 @@ import ResultsCount from '../../components/search/ResultsCount';
 import ResultsTable from '../../components/search/ResultsTable';
 import { getCentrosDocentes, getProgramasEducativos, getProyectosVigentes } from '../../api/projects.api';
 import { PERIODO_DEFAULT } from '../../lib/periodos';
+import { filtrarPorPago } from '../../lib/pago';
 
 export default function SearchProjects() {
   // Los filtros viven en la URL (query params). Esto resuelve el problema
@@ -18,6 +19,7 @@ export default function SearchProjects() {
     centro: searchParams.get('centro') || '0',
     programa: searchParams.get('programa') || '0',
     query: searchParams.get('q') || '',
+    pago: searchParams.get('pago') || 'todos',
   }), [searchParams]);
 
   const [centros, setCentros] = useState([]);
@@ -50,20 +52,26 @@ export default function SearchProjects() {
 
   // Actualizar un filtro = actualizar la URL.
   const handleChange = (key, value) => {
-    const keyMap = { periodo: 'periodo', centro: 'centro', programa: 'programa', query: 'q' };
+    const keyMap = { periodo: 'periodo', centro: 'centro', programa: 'programa', query: 'q', pago: 'pago' };
     const next = new URLSearchParams(searchParams);
     const paramKey = keyMap[key];
-    if (value && value !== '0' && !(key === 'periodo' && value === PERIODO_DEFAULT)) {
-      next.set(paramKey, value);
-    } else {
+    const esVacio =
+      !value ||
+      value === '0' ||
+      value === 'todos' ||
+      (key === 'periodo' && value === PERIODO_DEFAULT);
+    if (esVacio) {
       next.delete(paramKey);
+    } else {
+      next.set(paramKey, value);
     }
     setSearchParams(next, { replace: true });
   };
 
-  // El filtro por nombre es en el cliente (rápido, sin nueva llamada).
-  const visibles = proyectos.filter((p) =>
-    (p.nombre || '').toLowerCase().includes(filters.query.toLowerCase())
+  // Filtros del lado del cliente (rápidos, sin nueva llamada): nombre + pago.
+  const visibles = filtrarPorPago(
+    proyectos.filter((p) => (p.nombre || '').toLowerCase().includes(filters.query.toLowerCase())),
+    filters.pago,
   );
 
   // Query string que se pasa al detalle para poder "Regresar" con los mismos filtros.

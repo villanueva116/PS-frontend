@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { formatDate, unidadReceptoraDe } from '../../lib/format';
+import { esPagado, formatMonto } from '../../lib/pago';
 import StatusBadge from '../project-detail/StatusBadge';
 
 export default function ResultsTable({ proyectos, detalleQuery }) {
@@ -15,13 +16,14 @@ export default function ResultsTable({ proyectos, detalleQuery }) {
 
   return (
     <div className="mt-6 overflow-x-auto rounded-lg border border-line bg-white">
-      <table className="w-full min-w-[860px] text-left text-sm">
+      <table className="w-full min-w-[980px] text-left text-sm">
         <thead className="bg-sky-100 text-slate-700">
           <tr>
             <th className="px-4 py-3 font-mono text-xs uppercase tracking-wide">ID</th>
             <th className="px-4 py-3 font-medium">Nombre</th>
             <th className="px-4 py-3 font-medium">Unidad Receptora</th>
             <th className="px-4 py-3 font-medium">Ámbito</th>
+            <th className="px-4 py-3 font-medium">Apoyo económico</th>
             <th className="px-4 py-3 font-medium">Estatus</th>
             <th className="px-4 py-3 font-medium">Fin Vigencia</th>
             <th className="px-4 py-3" />
@@ -37,6 +39,17 @@ export default function ResultsTable({ proyectos, detalleQuery }) {
               <td className="max-w-md px-4 py-4 align-top leading-relaxed text-slate-700">{p.nombre}</td>
               <td className="px-4 py-4 align-top text-slate-500">{unidadReceptoraDe(p)}</td>
               <td className="px-4 py-4 align-top text-slate-500">{p.ambito || '—'}</td>
+              <td className="px-4 py-4 align-top">
+                {esPagado(p) ? (
+                  <span className="inline-flex items-center rounded-full bg-success-600/10 px-2.5 py-1 text-xs font-medium text-success-600">
+                    {formatMonto(p.monto)}
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center rounded-full bg-slate-400/15 px-2.5 py-1 text-xs font-medium text-slate-500">
+                    No pagado
+                  </span>
+                )}
+              </td>
               <td className="px-4 py-4 align-top"><StatusBadge estatus={p.estatus} /></td>
               <td className="px-4 py-4 align-top text-slate-500">{formatDate(p.finVigencia)}</td>
               <td className="px-4 py-4 align-top">

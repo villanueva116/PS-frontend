@@ -1,4 +1,5 @@
 import Field from '../Field';
+import { formatMonto } from '../../../lib/pago';
 
 function siNo(v) {
   return v === true ? 'Sí' : v === false ? 'No' : '—';
@@ -10,7 +11,7 @@ export default function TabProyecto({ p }) {
       <Field label="Recursos con los que dispondrá el prestador" value={p.recursosMateriales} multiline rows={5} />
       <Field label="Recursos humanos" value={p.recursosHumanos} multiline rows={4} />
       <Field label="Infraestructura" value={p.recursosInfraestructura} multiline rows={3} />
-      <Field label="Apoyo económico (mensual)" value={p.monto} />
+      <Field label="Apoyo económico (mensual)" value={formatMonto(p.monto)} />
       <div className="grid grid-cols-2 gap-4">
         <Field label="Viáticos — Alimentos" value={siNo(p.viaticosAlimentos)} />
         <Field label="Viáticos — Transporte" value={siNo(p.viaticosTransporte)} />

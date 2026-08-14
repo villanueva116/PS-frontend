@@ -1,5 +1,6 @@
 import Select from '../common/Select';
 import { PERIODOS } from '../../lib/periodos';
+import { PAGO_OPCIONES } from '../../lib/pago';
 
 export default function FilterBar({ filters, onChange, centros = [], programas = [] }) {
   const centroOptions = [
@@ -13,7 +14,7 @@ export default function FilterBar({ filters, onChange, centros = [], programas =
 
   return (
     <div className="rounded-lg border border-line bg-white p-6 shadow-sm">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Select
           label="Periodo"
           value={filters.periodo}
@@ -31,6 +32,12 @@ export default function FilterBar({ filters, onChange, centros = [], programas =
           value={filters.programa}
           onChange={(e) => onChange('programa', e.target.value)}
           options={programaOptions}
+        />
+        <Select
+          label="Apoyo económico"
+          value={filters.pago}
+          onChange={(e) => onChange('pago', e.target.value)}
+          options={PAGO_OPCIONES}
         />
       </div>
 

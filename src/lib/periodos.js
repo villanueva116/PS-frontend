@@ -4,8 +4,6 @@
 // Convención UADY: dos semestres al año.
 //   - Ene–Jun  → fecha de corte 30 jun (fin de vigencia)
 //   - Jul–Dic  → fecha de corte 31 dic
-const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-
 function construirPeriodos() {
   const periodos = [];
   const START_YEAR = 2005;

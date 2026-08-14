@@ -8,9 +8,15 @@ export const getCentrosDocentes = () => apiClient.get('/centros-docentes');
 
 export const getProgramasEducativos = () => apiClient.get('/programas-educativos');
 
-export const getProyectosVigentes = ({ centroDocenteId = 0, programaEducativoId = 0, fecha = '' }) =>
+export const getProyectosVigentes = ({ centroDocenteId = 0, programaEducativoId = 0, fecha = '', pagado }) =>
   apiClient.get('/proyectos/vigentes', {
-    params: { centroDocenteId, programaEducativoId, fecha },
+    // `pagado` solo se envía si es 'si' o 'no' (el backend lo revalida igual).
+    params: {
+      centroDocenteId,
+      programaEducativoId,
+      fecha,
+      ...(pagado === 'si' || pagado === 'no' ? { pagado } : {}),
+    },
   });
 
 export const getProyectoDetalle = ({ id, fecha = '' }) =>
